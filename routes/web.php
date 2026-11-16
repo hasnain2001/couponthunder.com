@@ -9,7 +9,10 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ContactController;
 use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
-
+    Route::controller(SitemapController::class)->group(function () {
+    Route::get('/sitemap.xml', 'index')->name('sitemap.xml');
+    Route::get('/generate-sitemap', 'generate')->name('generate-sitemap');
+    });
 Route::middleware(['auth','role:user'])->group(function () {
     Route::get('/dashboard', function () { return view('dashboard');})->name('dashboard');
     });
@@ -35,7 +38,6 @@ Route::middleware(['auth','role:user'])->group(function () {
             Route::get('{lang?}/category', 'category')->name('category');        
             Route::get('{lang?}/coupon', 'coupons')->name('coupons');
             Route::get('{lang?}/deal', 'deal')->name('deals');
-            Route::get('{lang?}/faq', 'faq')->name('faq');
             Route::get('{lang?}/coupon/{slug}', 'coupon_detail')->name('coupon.detail');
             Route::get('{lang?}/blog', 'blog')->name('blog');
             Route::get('/blog/{slug}',function($slug) {return app(HomeController::class)->blog_detail('en', $slug, request());})->name('blog.detail');
@@ -50,7 +52,3 @@ Route::middleware(['auth','role:user'])->group(function () {
             Route::get('/Search/Store', 'search')->name('search');
             Route::get('/Search/Stores', 'searchResults')->name('search_results');
      });
-    Route::controller(SitemapController::class)->group(function () {
-    Route::get('/sitemap.xml', 'index')->name('sitemap.xml');
-    Route::get('/generate-sitemap', 'generate')->name('generate-sitemap');
-    });
