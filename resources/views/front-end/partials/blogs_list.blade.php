@@ -36,3 +36,4 @@
     {{ $blogs->links('pagination::bootstrap-5') }}
 </div>
 @endif
+ 
