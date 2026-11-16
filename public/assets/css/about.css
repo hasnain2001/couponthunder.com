@@ -1,0 +1,234 @@
+/* ==========================================
+   ABOUT PAGE - CLEAN LAYOUT
+   ========================================== */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Global Page Background (Soft Peach) */
+body {
+    background-color: var(--surface-alt);
+}
+
+/* --- About Header --- */
+.about-header {
+    background: var(--surface-alt);
+    padding: 4rem 0 3rem;
+    text-align: center;
+}
+
+.about-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.about-header .lead {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin: 0;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+/* --- Breadcrumb --- */
+.breadcrumb-custom {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-item a {
+    color: var(--primary);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--primary-dark);
+}
+
+/* --- Main Content Card --- */
+.about-content-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 3.5rem 4rem;
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* --- Sections & Typography --- */
+.about-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-warm);
+}
+
+.about-section:last-child {
+    border-bottom: none;
+}
+
+.about-section h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* --- List Styling --- */
+.about-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    color: var(--text-secondary);
+}
+
+.about-list li {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+}
+
+/* --- Testimonial Block --- */
+.testimonial-block {
+    border-left: 4px solid var(--primary);
+    background: var(--surface);
+    padding: 1.5rem 2rem;
+    border-radius: 0 12px 12px 0;
+    margin: 2rem 0;
+}
+
+.testimonial-block p {
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* --- CTA Section --- */
+.cta-section {
+    background: var(--surface-alt);
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid var(--border-warm);
+}
+
+.cta-section h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.cta-section p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn.primary {
+    background: var(--primary-gradient);
+    color: var(--text-on-primary);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 140, 75, 0.3);
+}
+
+.cta-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 140, 75, 0.5);
+    background: var(--primary-dark);
+}
+
+.cta-btn.secondary {
+    background: var(--white);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.cta-btn.secondary:hover {
+    background: var(--primary);
+    color: var(--text-on-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 140, 75, 0.3);
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .about-header {
+        padding: 3rem 0 2rem;
+    }
+    
+    .about-header h1 {
+        font-size: 2rem;
+    }
+    
+    .about-content-card {
+        padding: 2rem;
+        margin-bottom: 3rem;
+        border-radius: 12px;
+    }
+
+    .about-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .cta-section {
+        padding: 2rem 1.5rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .about-header h1,
+    .about-header .lead,
+    .about-content-card {
+        animation: none !important;
+    }
+}

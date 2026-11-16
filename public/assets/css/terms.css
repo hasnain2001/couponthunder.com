@@ -1,0 +1,162 @@
+/* ==========================================
+   TERMS OF SERVICE - CLEAN LEGAL LAYOUT
+   ========================================== */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Page Background */
+body {
+    background-color: var(--surface-alt); /* Warm Cream */
+}
+
+/* --- Header --- */
+.terms-header {
+    background: var(--accent-gradient); /* Dark Navy */
+    color: var(--white);
+    padding: 4rem 0 5rem;
+    margin-bottom: -3rem; /* Overlap effect */
+    position: relative;
+}
+
+.terms-header h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #FFFFFF 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.terms-header .lead {
+    font-size: 1.15rem;
+    color: var(--light-gray);
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.last-updated-badge {
+    background: rgba(255, 140, 75, 0.15); /* Soft Orange */
+    border: 1px solid rgba(255, 140, 75, 0.3);
+    backdrop-filter: blur(10px);
+    color: var(--primary-lighter);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+/* --- Main Card --- */
+.terms-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+    padding: 4rem 3.5rem;
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+/* --- Trademark Disclaimer --- */
+.trademark-alert {
+    background: rgba(255, 140, 75, 0.08); /* Soft Orange Background */
+    border-left: 4px solid var(--primary); /* Vibrant Orange Border */
+    padding: 1.5rem;
+    border-radius: 0 12px 12px 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+}
+
+.trademark-alert i {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+/* --- Sections & Typography --- */
+.terms-section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-warm);
+}
+
+.terms-section h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.terms-section p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+/* --- Lists --- */
+.terms-list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.terms-list li {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+}
+
+/* --- Contact Button --- */
+.btn-contact {
+    display: inline-flex;
+    align-items: center;
+    background: var(--primary-gradient);
+    color: var(--white);
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 75, 0.3);
+    margin-top: 1rem;
+}
+
+.btn-contact:hover {
+    background: var(--primary-dark);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 140, 75, 0.5);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .terms-header {
+        padding: 3rem 1rem 4rem;
+    }
+    
+    .terms-header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .terms-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .trademark-alert {
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+    }
+}

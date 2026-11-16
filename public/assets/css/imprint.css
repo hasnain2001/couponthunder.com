@@ -1,0 +1,301 @@
+/* ==========================================
+   HERO SECTION (Premium Redesign)
+   ========================================== */
+.imprint-hero {
+    /* Deep rich dark background */
+    background: linear-gradient(135deg, var(--accent-navy-dark) 0%, var(--accent-navy) 100%);
+    padding: 6rem 0 8rem; /* Increased padding for better layout */
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 5px solid var(--primary);
+}
+
+/* Floating Orange Glow */
+.imprint-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(255, 140, 75, 0.15) 0%, transparent 60%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: pulseGlow 8s infinite alternate;
+}
+
+/* Floating Yellow Glow */
+.imprint-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 193, 7, 0.1) 0%, transparent 60%);
+    border-radius: 50%;
+    filter: blur(60px);
+    z-index: 0;
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+    100% { transform: scale(1.1) translate(20px, 20px); opacity: 1; }
+}
+
+/* Make sure text sits above the glows */
+.imprint-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.imprint-hero h1 {
+    font-weight: 800;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    letter-spacing: -0.03em;
+    /* Bold White to Vibrant Orange Gradient */
+    background: linear-gradient(135deg, #FFFFFF 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0px 4px 15px rgba(255, 140, 75, 0.2));
+}
+
+.imprint-hero .lead {
+    font-weight: 400;
+    color: var(--light-gray);
+    font-size: 1.3rem;
+    max-width: 650px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 140, 75, 0.1);
+    backdrop-filter: blur(12px);
+    padding: 0.6rem 1.8rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 140, 75, 0.4);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--white);
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 20px rgba(255, 140, 75, 0.15);
+    transition: all 0.3s ease;
+}
+
+.hero-badge:hover {
+    background: rgba(255, 140, 75, 0.2);
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 140, 75, 0.3);
+}
+
+.hero-badge i {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+/* ==========================================
+   MAIN CARD
+   ========================================== */
+.imprint-card {
+    margin-top: -4rem; /* Overlap the hero section */
+    border-radius: 28px;
+    background: var(--white);
+    box-shadow: var(--shadow-heavy);
+    overflow: hidden;
+    border: none;
+    position: relative;
+    z-index: 3;
+}
+
+/* Header inside card */
+.imprint-header {
+    background: var(--primary-gradient);
+    padding: 2.5rem 2rem;
+    color: var(--white);
+    text-align: center;
+}
+
+.imprint-header h2 {
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+
+.imprint-header .subtitle {
+    opacity: 0.9;
+    font-weight: 400;
+    margin-bottom: 0;
+    color: var(--primary-lighter);
+}
+
+/* ==========================================
+   INFO SECTIONS
+   ========================================== */
+.info-section {
+    padding: 2.5rem;
+    border-bottom: 1px solid var(--border-warm);
+    transition: background 0.2s ease;
+}
+
+.info-section:hover {
+    background: var(--surface);
+}
+
+.info-section:last-child {
+    border-bottom: none;
+}
+
+.info-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--primary-gradient);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 6px 16px rgba(255, 140, 75, 0.25);
+}
+
+.info-title {
+    font-weight: 700;
+    color: var(--accent-navy);
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.info-content {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.info-content a {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.info-content a:hover {
+    border-bottom-color: var(--primary);
+}
+
+/* ==========================================
+   COMPANY INFO CARD (Matches Image)
+   ========================================== */
+.company-info-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-warm);
+    box-shadow: var(--shadow-light);
+    max-width: 650px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+.company-info-card strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.company-info-card h5 {
+    color: var(--text-primary);
+    font-size: 1.15rem;
+}
+
+.company-info-card a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.company-info-card a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* Subtle background for the section containing the Company Card */
+.info-section:has(.company-info-card) {
+    background: rgba(255, 140, 75, 0.03);
+}
+
+/* ==========================================
+   HIGHLIGHTS & CTA
+   ========================================== */
+.back-home-section {
+    background: var(--surface-alt);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-top: 1px solid var(--border-warm);
+}
+
+.btn-primary-custom {
+    background: var(--primary-gradient);
+    border: none;
+    color: var(--white);
+    padding: 12px 34px;
+    border-radius: 60px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(255, 140, 75, 0.3);
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-primary-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(255, 140, 75, 0.5);
+    color: var(--white);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (max-width: 768px) {
+    .imprint-hero { padding: 4rem 1rem 6rem; }
+    .imprint-card { margin-top: -3rem; border-radius: 20px; }
+    .info-section { padding: 1.5rem; }
+    .company-info-card { padding: 1.5rem; }
+    .imprint-hero h1 { font-size: 2.2rem; }
+}
+
+@media (max-width: 480px) {
+    .imprint-header h2 { font-size: 1.4rem; }
+    .info-icon { width: 44px; height: 44px; font-size: 1rem; }
+    .btn-primary-custom { padding: 10px 24px; font-size: 0.95rem; }
+    .company-info-card { padding: 1.25rem; }
+}
+
+/* ==========================================
+   UTILITY CLASSES
+   ========================================== */
+.text-accent { color: var(--accent-navy); }
+.bg-soft-primary { background: rgba(255, 140, 75, 0.1); }
+.border-soft { border-color: var(--border-warm) !important; }
+.glow-sm { box-shadow: 0 4px 14px rgba(255, 140, 75, 0.12); }
+.rounded-4 { border-radius: 18px; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+.text-primary-dark { color: var(--primary-dark); }
+
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}

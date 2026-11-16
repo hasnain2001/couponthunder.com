@@ -1,0 +1,423 @@
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes floatOrb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 20px) scale(1.1); }
+}
+
+/* ============================================================
+   PAGE HEADER (Animated Orange) - Normalized Size
+   ============================================================ */
+.page-header {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+    padding: 3rem 0; /* Reduced from 5rem */
+    margin-bottom: 2rem;
+    color: var(--text-on-primary);
+    text-align: center;
+    overflow: hidden;
+}
+
+.header-bg-animation {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.header-bg-animation::before,
+.header-bg-animation::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    filter: blur(40px);
+}
+
+.header-bg-animation::before {
+    width: 300px; height: 300px;
+    top: -100px; left: -50px;
+    animation: floatOrb 10s ease-in-out infinite;
+}
+
+.header-bg-animation::after {
+    width: 400px; height: 400px;
+    bottom: -150px; right: -100px;
+    animation: floatOrb 12s ease-in-out infinite reverse;
+}
+
+.page-header .z-1 { position: relative; z-index: 1; }
+
+.page-header h1 {
+    font-size: 2.5rem; /* Reduced from 3.5rem */
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.page-header .lead {
+    font-size: 1.2rem; /* Reduced from 1.5rem */
+    font-weight: 500;
+    margin: 0;
+    animation: fadeInUp 0.6s ease-out 0.15s both;
+}
+
+/* ============================================================
+   TRENDING BLOGS SECTION (FIXED GRID & SIZE)
+   ============================================================ */
+.trending-section {
+    padding: 20px 0 40px;
+}
+
+/* Scalloped Badge */
+.trending-blob-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 200' preserveAspectRatio='none'%3E%3Cpath fill='%23FFD1BC' d='M 40 40 C 60 10, 90 10, 110 40 C 130 10, 160 10, 180 40 C 200 10, 230 10, 250 40 C 270 10, 300 10, 320 40 C 340 10, 370 10, 390 40 C 410 10, 440 10, 460 40 C 480 10, 510 10, 530 40 C 550 10, 580 10, 600 40 C 620 10, 650 10, 670 40 C 690 10, 720 10, 740 40 C 770 50, 780 80, 750 110 C 780 140, 770 170, 740 160 C 720 190, 690 190, 670 160 C 650 190, 620 190, 600 160 C 580 190, 550 190, 530 160 C 510 190, 480 190, 460 160 C 440 190, 410 190, 390 160 C 370 190, 340 190, 320 160 C 300 190, 270 190, 250 160 C 230 190, 200 190, 180 160 C 160 190, 130 190, 110 160 C 90 190, 60 190, 40 160 C 10 150, 0 120, 20 90 C -10 60, 10 30, 40 40 Z'/%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px 60px; /* Reduced from 35px 80px */
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+}
+
+.trending-blob-badge:hover {
+    transform: translateY(-2px) scale(1.01);
+}
+
+.trending-blob-badge .tb-title {
+    font-weight: 800;
+    font-size: 1.1rem; /* Reduced */
+    color: #E66A2B;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 5px;
+    z-index: 1;
+}
+
+.trending-blob-badge .tb-subtitle {
+    font-size: 0.75rem; /* Reduced */
+    color: #E66A2B;
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 1;
+    letter-spacing: 0.5px;
+}
+
+/* --- FIXED GRID LAYOUT --- */
+.trending-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1.2fr; /* Better ratio */
+    grid-template-rows: 340px; /* Fixed exact height for the row */
+    gap: 15px;
+}
+
+/* Shared Card Styles */
+.trending-main-card, .trending-sub-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    background: var(--surface);
+}
+
+/* Main Card (Left) */
+.trending-main-card { 
+    height: 100%; 
+}
+
+/* Sub Grid (Right) */
+.trending-sub-grid {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;
+    height: 100%;
+}
+
+.trending-sub-card { 
+    height: 100%; 
+}
+
+/* Image Fitting - CRITICAL FIX: Using cover */
+.trending-main-card img, .trending-sub-card img {
+    width: 100%; height: 100%;
+    object-fit: contain; 
+    transition: transform 0.5s ease;
+}
+
+.trending-main-card:hover img, .trending-sub-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Overlay & Text */
+.card-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 30px 15px 15px; /* Tighter padding */
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-tag {
+    background: transparent;
+    color: var(--primary-light);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+}
+
+/* ============================================================
+   OUR BLOGS HEADER & PILLS
+   ============================================================ */
+.section-title {
+    font-size: 1.8rem; /* Reduced from 2.2rem */
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+}
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-pill {
+    display: inline-block;
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border-warm);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.filter-pill span {
+    font-weight: 400;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    margin-left: 3px;
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--text-on-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 140, 75, 0.3);
+}
+.filter-pill:hover span,
+.filter-pill.active span {
+    opacity: 0.9;
+}
+
+/* ============================================================
+   STANDARD BLOG CARDS
+   ============================================================ */
+.blog-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    border: 1px solid var(--border-warm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0; /* For JS/CSS animation */
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.blog-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: var(--primary-lighter);
+}
+
+/* Stagger animations */
+.blog-card:nth-child(1) { animation-delay: 0.1s; }
+.blog-card:nth-child(2) { animation-delay: 0.2s; }
+.blog-card:nth-child(3) { animation-delay: 0.3s; }
+.blog-card:nth-child(4) { animation-delay: 0.4s; }
+.blog-card:nth-child(5) { animation-delay: 0.5s; }
+.blog-card:nth-child(6) { animation-delay: 0.6s; }
+
+.card-img-wrapper {
+    height: 180px; /* Reduced from 220px */
+    background: var(--surface-alt);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.blog-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-category {
+    color: var(--primary-dark);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+.card-title {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1.05rem; /* Reduced from 1.15rem */
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.blog-card:hover .card-title {
+    color: var(--primary);
+}
+
+.card-date {
+    color: var(--text-light);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+.pagination {
+    margin-top: 2.5rem;
+}
+
+.page-link {
+    color: var(--text-primary);
+    border: 1px solid var(--border-warm);
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin: 0 0.25rem;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.page-link:hover {
+    color: var(--text-on-primary);
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.page-item.active .page-link {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--text-on-primary);
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+@media (max-width: 992px) {
+    /* Trending Grid Stacking */
+    .trending-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+    .trending-main-card {
+        height: 300px;
+        min-height: 300px;
+    }
+    .trending-sub-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        height: auto;
+    }
+    .trending-sub-card {
+        height: 160px;
+        min-height: 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 2rem 0;
+    }
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    .page-header .lead {
+        font-size: 1rem;
+    }
+    
+    .trending-blob-badge {
+        padding: 15px 40px;
+    }
+    .trending-blob-badge .tb-title {
+        font-size: 1rem;
+    }
+
+    .trending-sub-grid {
+        grid-template-columns: 1fr;
+    }
+    .trending-sub-card {
+        height: 180px;
+    }
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .page-header, .page-header h1, .page-header .lead, 
+    .blog-card, .card-img-top, .trending-main-card, 
+    .trending-sub-card, .trending-blob-badge,
+    .header-bg-animation::before, .header-bg-animation::after {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+    }
+}

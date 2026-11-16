@@ -1,0 +1,297 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Slider;
+use App\Models\Language;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use App\Models\Store;
+
+class SliderController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        $query = Slider::with('language')
+            ->orderBy('sort_order', 'asc');
+
+        // Status filter
+        if ($request->has('status')) {
+            $status = $request->status === 'active' ? 1 : 0;
+            $query->where('status', $status);
+        }
+
+        // Language filter
+        if ($request->has('language')) {
+            $query->whereHas('language', function($q) use ($request) {
+                $q->where('code', $request->language);
+            });
+        }
+
+        // Get all languages for filter dropdown
+        $languages = Language::all();
+
+        // Paginate results (15 items per page by default)
+        $sliders = $query->paginate($request->per_page ?? 15)
+            ->appends($request->query());
+
+        return view('admin.slider.index', compact('sliders', 'languages'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $languages = Language::orderBy('created_at', 'desc')->get();
+        $stores = Store::orderBy('created_at', 'desc')->get();
+        return view('admin.slider.create', compact('languages', 'stores'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'       => 'nullable|string|max:255',
+            'subtitle'    => 'nullable|string|max:2255',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'link'        => 'nullable|url',
+            'status'      => 'required|boolean',
+            'sort_order'  => 'required|integer',
+            'button_text' => 'nullable|string|max:50',
+            'store_id'    => 'required|exists:stores,id',
+            'language_id' => 'required|exists:languages,id',
+        ]);
+
+        /* ---------------------------
+        1️⃣ Save Slider Data
+        ----------------------------*/
+        $slider = new Slider();
+        $slider->title = $request->title;
+        $slider->subtitle = $request->subtitle;
+        $slider->link = $request->link;
+        $slider->status = $request->status;
+        $slider->sort_order = $request->sort_order;
+        $slider->button_text = $request->button_text;
+        $slider->language_id = $request->language_id;
+        $slider->store_id = $request->store_id;
+        $slider->user_id = Auth::id();
+        $slider->save();
+
+        /* ---------------------------
+        2️⃣ Handle Image Upload (using Storage)
+        ----------------------------*/
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            
+            // SEO-friendly image name
+            $slug = Str::slug($request->title);
+            $imageName = $slug . '-' . time() . '.' . $image->getClientOriginalExtension();
+
+            // Store in storage/app/public/sliders
+            $path = $image->storeAs('sliders', $imageName, 'public');
+
+            if ($path) {
+                $slider->image = $imageName;
+                $slider->save();
+            }
+        }
+
+        return redirect()
+            ->route('admin.slider.show', $slider->id)
+            ->with('success', 'Slider created successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Slider $slider)
+    {
+        $languages = Language::orderBy('created_at', 'desc')->get();
+        $stores = Store::orderBy('created_at', 'desc')->get();
+        return view('admin.slider.edit', compact('slider', 'languages', 'stores'));
+    }
+
+    public function show(Slider $slider)
+    {
+        return view('admin.slider.show', compact('slider'));
+    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Slider $slider)
+    {
+        $request->validate([
+            'title'       => 'nullable|string|max:255',
+            'subtitle'    => 'nullable|string|max:255',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'link'        => 'nullable|url',
+            'status'      => 'required|boolean',
+            'sort_order'  => 'required|integer',
+            'button_text' => 'nullable|string|max:50',
+            'store_id'    => 'required|exists:stores,id',
+            'language_id' => 'required|exists:languages,id',
+        ]);
+
+        /* ---------------------------
+        1️⃣ Update Slider Data
+        ----------------------------*/
+        $slider->title = $request->title;
+        $slider->subtitle = $request->subtitle;
+        $slider->link = $request->link;
+        $slider->status = $request->status;
+        $slider->sort_order = $request->sort_order;
+        $slider->button_text = $request->button_text;
+        $slider->language_id = $request->language_id;
+        $slider->store_id = $request->store_id;
+        $slider->updated_id = Auth::id();
+
+        /* ---------------------------
+        2️⃣ Handle Image Upload (using Storage)
+        ----------------------------*/
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if (!empty($slider->image)) {
+                Storage::disk('public')->delete('sliders/' . $slider->image);
+            }
+
+            $image = $request->file('image');
+            
+            // SEO-friendly image name
+            $slug = Str::slug($request->title);
+            $imageName = $slug . '-' . time() . '.' . $image->getClientOriginalExtension();
+
+            // Store new image
+            $path = $image->storeAs('sliders', $imageName, 'public');
+
+            if ($path) {
+                $slider->image = $imageName;
+            }
+        }
+
+        $slider->save();
+
+        return redirect()
+            ->route('admin.slider.show', $slider->id)
+            ->with('success', 'Slider updated successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Slider $slider)
+    {
+        // Delete image from storage if exists
+        if (!empty($slider->image)) {
+            Storage::disk('public')->delete('sliders/' . $slider->image);
+        }
+
+        // Delete DB record
+        $slider->delete();
+
+        return redirect()
+            ->route('admin.slider.index')
+            ->with('success', 'Slider deleted successfully.');
+    }
+
+    /**
+     * Delete multiple selected sliders.
+     */
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->input('ids');
+
+        if (!empty($ids)) {
+            foreach ($ids as $id) {
+                $slider = Slider::find($id);
+
+                if ($slider) {
+                    // Delete image from storage
+                    if (!empty($slider->image)) {
+                        Storage::disk('public')->delete('sliders/' . $slider->image);
+                    }
+
+                    // Delete slider
+                    $slider->delete();
+                }
+            }
+        }
+
+        return redirect()
+            ->route('admin.slider.index')
+            ->with('success', 'Selected sliders deleted successfully.');
+    }
+
+    /**
+     * Export sliders to CSV.
+     */
+    public function export(Request $request)
+    {
+        $query = Slider::query();
+
+        // Apply filters
+        if ($request->filled('status')) {
+            $status = $request->status === 'active' ? 1 : 0;
+            $query->where('status', $status);
+        }
+
+        if ($request->filled('language')) {
+            $query->whereHas('language', function ($q) use ($request) {
+                $q->where('code', $request->language);
+            });
+        }
+
+        $sliders = $query->get();
+
+        $fileName = 'sliders-' . now()->format('Y-m-d') . '.csv';
+
+        $headers = [
+            "Content-Type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Cache-Control"       => "no-store, no-cache",
+        ];
+
+        $columns = [
+            'ID',
+            'Title',
+            'Image',
+            'Status',
+            'Link',
+            'Sort Order',
+            'Language',
+            'Created At',
+        ];
+
+        $callback = function () use ($sliders, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($sliders as $slider) {
+                fputcsv($file, [
+                    $slider->id,
+                    $slider->title,
+                    $slider->image 
+                        ? asset('storage/sliders/' . $slider->image) 
+                        : 'No Image',
+                    $slider->status ? 'Active' : 'Inactive',
+                    $slider->link,
+                    $slider->sort_order,
+                    $slider->language->name ?? 'N/A',
+                    $slider->created_at->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+}

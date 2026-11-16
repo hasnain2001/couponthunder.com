@@ -1,0 +1,111 @@
+/* ===================================================== */
+/* FAQ PAGE STYLES                                       */
+/* ===================================================== */
+
+/* --- Container --- */
+.faq-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+/* --- Page Title --- */
+.faq-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.faq-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--primary-gradient);
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+
+/* --- FAQ Item (Card) --- */
+.faq-item {
+    background-color: var(--white);
+    border: 1px solid var(--border-warm);
+    border-radius: 16px;
+    padding: 25px 30px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-3px);
+    border-color: var(--primary-lighter);
+}
+
+/* --- Question --- */
+.faq-question {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-dark); /* Dark orange to make it pop */
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1.4;
+}
+
+/* Custom question mark icon */
+.faq-question::before {
+    content: '?';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-lighter);
+    color: var(--primary-dark);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* --- Answer --- */
+.faq-answer {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+    padding-left: 42px; /* Aligns text perfectly with the question text, skipping the icon */
+}
+
+/* ===================================================== */
+/* RESPONSIVE DESIGN                                     */
+/* ===================================================== */
+@media (max-width: 768px) {
+    .faq-container {
+        margin: 30px auto;
+    }
+    
+    .faq-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .faq-item {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .faq-question {
+        font-size: 1.05rem;
+    }
+
+    .faq-answer {
+        font-size: 0.95rem;
+        padding-left: 0; /* Removes the indent on mobile for more space */
+    }
+}
