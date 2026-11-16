@@ -17,7 +17,7 @@
         <!-- CENTER: Search Bar (Desktop Only) -->
         <div class="nav-center desktop-only">
             <form action="{{ route('search') }}" method="GET" class="custom-search-form">
-                <input type="search" name="query" class="custom-search-input" placeholder="Search here..." value="{{ request('query') }}">
+                <input type="search" name="query" class="custom-search-input" placeholder="@lang('common.search')" value="{{ request('query') }}">
                 <button type="submit" class="custom-search-submit">
                     <i class="bi bi-search"></i>
                 </button>
